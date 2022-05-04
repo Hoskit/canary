@@ -526,7 +526,7 @@ function readSpell(incomingLua)
 				spell:setConditionDuration(incomingLua.duration)
 			end
 			if incomingLua.speedChange then
-				if type(attack.speedChange) == "table" then
+				if type(incomingLua.speedChange) == "table" then
 					spell:setConditionSpeedChange(incomingLua.speedChange.min, incomingLua.speedChange.max)
 				else
 					spell:setConditionSpeedChange(incomingLua.speedChange)
