@@ -97,7 +97,7 @@ class Script {
 
 		// Load revscriptsys callback
 		bool loadCallback() {
-			if (!scriptInterface || scriptId == 0) {
+			if (!scriptInterface || scriptId != 0) {
 				SPDLOG_ERROR("[Script::loadCallback] scriptInterface is nullptr, scriptid = {}, scriptName {}", scriptId, scriptInterface->getLoadingScriptName());
 				return false;
 			}
