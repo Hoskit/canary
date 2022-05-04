@@ -113,6 +113,30 @@ class Script {
 			return true;
 		}
 
+		bool loadScript(const std::string& scriptFile) {
+			if ((scriptInterface == nullptr) || scriptId != 0) {
+				SPDLOG_WARN("[Event::loadScript] - ScriptInterface (nullptr), "
+							"can not load scriptid: {}", scriptId);
+				return false;
+			}
+
+			if (scriptInterface->loadFile(scriptFile) == -1) {
+				SPDLOG_WARN("[Event::loadScript] - Can not load script: {}",
+							scriptFile);
+				SPDLOG_WARN(scriptInterface->getLastLuaError());
+				return false;
+			}
+
+			int32_t id = scriptInterface->getEvent(getScriptTypeName());
+			if (id == -1) {
+				SPDLOG_ERROR("[Script::loadScript] Event {} not found for script with name {}", getScriptTypeName(), scriptInterface->getLoadingScriptName());
+				return false;
+			}
+
+			setLoadedCallback(true);
+			scriptId = id;
+			return true;
+		}
 
 	protected:
 		// If script is loaded callback
